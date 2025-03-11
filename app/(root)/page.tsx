@@ -1,12 +1,13 @@
 import BookList from "@/components/BookList";
 import BookOverview from "@/components/BookOverview";
+import { sampleBooks } from "@/lib/constants";
 
 export default function Home() {
 	return (
 		<>
-			<BookOverview />
+			<BookOverview currentBook={sampleBooks[0]} />
 
-			<BookList />
+			<BookList className="mt-28" books={sampleBooks} title="Latest Books" />
 		</>
 	);
 }
