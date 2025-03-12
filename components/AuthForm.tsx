@@ -1,6 +1,7 @@
 import {
 	DefaultValues,
 	FieldValues,
+	Path,
 	SubmitHandler,
 	UseFormReturn,
 	useForm,
@@ -8,7 +9,6 @@ import {
 import {
 	Form,
 	FormControl,
-	FormDescription,
 	FormField,
 	FormItem,
 	FormLabel,
@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
 import Link from "next/link";
+import { FIELD_NAMES, FIELD_TYPES } from "@/lib/constants";
+import ImageUpload from "./ImageUpload";
 
 type AuthFormProps<T extends FieldValues> = {
 	defaultValues: T;
@@ -55,30 +57,49 @@ export default function AuthForm<T extends FieldValues>({
 			</p>
 
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField
-						control={form.control}
-						name="username"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Username</FormLabel>
-								<FormControl>
-									<Input placeholder="shadcn" {...field} />
-								</FormControl>
-								<FormDescription>
-									This is your public display name.
-								</FormDescription>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
+				<form
+					onSubmit={form.handleSubmit(handleSubmit)}
+					className="space-y-6 w-full"
+				>
+					{Object.keys(defaultValues).map((field) => (
+						<FormField
+							key={field}
+							control={form.control}
+							name={field as Path<T>}
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className="capitalize">
+										{FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
+									</FormLabel>
+									<FormControl>
+										{field.name === "universityCard" ? (
+											<ImageUpload />
+										) : (
+											<Input
+												className="form-input"
+												type={
+													FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
+												}
+												required
+												{...field}
+											/>
+										)}
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					))}
 
-					<Button type="submit">Submit</Button>
+					<Button className="form-btn" type="submit">
+						{isSignIn ? "Sign In" : "Create Account"}
+					</Button>
 				</form>
 			</Form>
 
 			<p className="text-center text-base font-medium">
 				{isSignIn ? "New to BookWise? " : "Already have an account? "}
+
 				<Link
 					href={isSignIn ? "/signup" : "/signin"}
 					className="font-bold text-primary/90 hover:text-primary transition-all"
