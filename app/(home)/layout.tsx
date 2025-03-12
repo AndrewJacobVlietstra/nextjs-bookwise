@@ -5,7 +5,7 @@ type LayoutProps = {
 	children: ReactNode;
 };
 
-export default function Layout({ children }: LayoutProps) {
+export default function HomeLayout({ children }: LayoutProps) {
 	return (
 		<main className="root-container">
 			<div className="mx-auto max-w-7xl">
