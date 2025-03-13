@@ -18,8 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
-import Link from "next/link";
 import { FIELD_NAMES, FIELD_TYPES } from "@/lib/constants";
+import Link from "next/link";
 import ImageUpload from "./ImageUpload";
 
 type AuthFormProps<T extends FieldValues> = {
@@ -73,7 +73,7 @@ export default function AuthForm<T extends FieldValues>({
 									</FormLabel>
 									<FormControl>
 										{field.name === "universityCard" ? (
-											<ImageUpload />
+											<ImageUpload onFileChange={field.onChange} />
 										) : (
 											<Input
 												className="form-input"
