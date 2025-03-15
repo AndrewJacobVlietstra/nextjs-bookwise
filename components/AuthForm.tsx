@@ -18,7 +18,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
+import { toast } from "sonner";
 import { FIELD_NAMES, FIELD_TYPES } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "./ImageUpload";
 
@@ -26,7 +28,7 @@ type AuthFormProps<T extends FieldValues> = {
 	defaultValues: T;
 	type: "signin" | "signup";
 	schema: ZodType<T>;
-	onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
+	onSubmit: (data: T) => Promise<{ success: boolean; message?: string }>;
 };
 
 export default function AuthForm<T extends FieldValues>({
@@ -35,6 +37,7 @@ export default function AuthForm<T extends FieldValues>({
 	defaultValues,
 	onSubmit,
 }: AuthFormProps<T>) {
+	const router = useRouter();
 	const isSignIn = type === "signin";
 
 	const form: UseFormReturn<T> = useForm({
@@ -42,7 +45,31 @@ export default function AuthForm<T extends FieldValues>({
 		defaultValues: defaultValues as DefaultValues<T>,
 	});
 
-	const handleSubmit: SubmitHandler<T> = async (data) => {};
+	const handleSubmit: SubmitHandler<T> = async (data) => {
+		const result = await onSubmit(data);
+
+		if (result.success) {
+			toast.success(result.message, {
+				style: {
+					color: "#fff",
+					backgroundColor: "#333",
+					border: "1px solid #777",
+				},
+				duration: 6000,
+			});
+
+			router.push("/");
+		} else if (!result.success) {
+			toast.error(result.message, {
+				style: {
+					color: "#fff",
+					backgroundColor: "#E23D28",
+					border: "1px solid #FF7F50",
+				},
+				duration: 6000,
+			});
+		}
+	};
 
 	return (
 		<div className="flex flex-col gap-4">
