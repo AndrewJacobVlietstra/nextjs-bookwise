@@ -28,11 +28,11 @@ export default function BookOverview({ currentBook }: BookOverviewProps) {
 
 				<div className="book-info">
 					<p>
-						By <span className="font-semibold text-light-200">{author}</span>
+						By: <span className="font-semibold text-light-200">{author}</span>
 					</p>
 
 					<p>
-						Category{" "}
+						Category:{" "}
 						<span className="font-semibold text-light-200">{genre}</span>
 					</p>
 

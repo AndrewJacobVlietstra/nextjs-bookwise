@@ -1,11 +1,17 @@
 import Image from "next/image";
 import { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 
 type AuthLayoutProps = {
 	children: ReactNode;
 };
 
-export default function AuthLayout({ children }: AuthLayoutProps) {
+export default async function AuthLayout({ children }: AuthLayoutProps) {
+	// If user logged in, redirect them to home page if they try to access auth pages
+	const session = await auth();
+	if (session) redirect("/");
+
 	return (
 		<main className="auth-container">
 			<section className="auth-form">

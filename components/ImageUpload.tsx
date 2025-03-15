@@ -50,7 +50,7 @@ export default function ImageUpload({ onFileChange }: ImageUploadProps) {
 				backgroundColor: "#ff1a1a",
 				border: "none",
 			},
-			duration: 8000,
+			duration: 6000,
 		});
 	};
 
@@ -62,7 +62,7 @@ export default function ImageUpload({ onFileChange }: ImageUploadProps) {
 		toast("Image Uploaded Successfully", {
 			description: `${res.filePath} uploaded successfully!`,
 			style: { color: "#fff", backgroundColor: "#333", border: "none" },
-			duration: 8000,
+			duration: 5000,
 		});
 	};
 

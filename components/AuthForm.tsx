@@ -55,7 +55,7 @@ export default function AuthForm<T extends FieldValues>({
 					backgroundColor: "#333",
 					border: "1px solid #777",
 				},
-				duration: 6000,
+				duration: 5000,
 			});
 
 			router.push("/");
@@ -66,7 +66,7 @@ export default function AuthForm<T extends FieldValues>({
 					backgroundColor: "#E23D28",
 					border: "1px solid #FF7F50",
 				},
-				duration: 6000,
+				duration: 5000,
 			});
 		}
 	};
