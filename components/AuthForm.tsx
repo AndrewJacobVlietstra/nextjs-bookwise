@@ -14,8 +14,8 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
 import { toast } from "sonner";
@@ -23,6 +23,7 @@ import { FIELD_NAMES, FIELD_TYPES } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ImageUpload from "./ImageUpload";
+import AuthButton from "./AuthButton";
 
 type AuthFormProps<T extends FieldValues> = {
 	defaultValues: T;
@@ -37,6 +38,7 @@ export default function AuthForm<T extends FieldValues>({
 	defaultValues,
 	onSubmit,
 }: AuthFormProps<T>) {
+	const [isPending, setIsPending] = useState(false);
 	const router = useRouter();
 	const isSignIn = type === "signin";
 
@@ -46,6 +48,7 @@ export default function AuthForm<T extends FieldValues>({
 	});
 
 	const handleSubmit: SubmitHandler<T> = async (data) => {
+		setIsPending((prev) => !prev);
 		const result = await onSubmit(data);
 
 		if (result.success) {
@@ -69,6 +72,8 @@ export default function AuthForm<T extends FieldValues>({
 				duration: 5000,
 			});
 		}
+
+		setIsPending((prev) => !prev);
 	};
 
 	return (
@@ -118,9 +123,7 @@ export default function AuthForm<T extends FieldValues>({
 						/>
 					))}
 
-					<Button className="form-btn" type="submit">
-						{isSignIn ? "Sign In" : "Create Account"}
-					</Button>
+					<AuthButton authType={type} isPending={isPending} />
 				</form>
 			</Form>
 

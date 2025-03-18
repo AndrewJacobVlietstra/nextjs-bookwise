@@ -9,7 +9,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 	pages: {
 		signIn: "/signin",
 	},
-
+	session: {
+		maxAge: 86400, // 86400 seconds == 1 day,
+		strategy: "jwt",
+	},
 	providers: [
 		Credentials({
 			async authorize(credentials) {
@@ -55,8 +58,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 			return session;
 		},
-	},
-	session: {
-		strategy: "jwt",
 	},
 });
