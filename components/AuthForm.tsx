@@ -38,8 +38,8 @@ export default function AuthForm<T extends FieldValues>({
 	defaultValues,
 	onSubmit,
 }: AuthFormProps<T>) {
-	const [isPending, setIsPending] = useState(false);
 	const router = useRouter();
+	const [isPending, setIsPending] = useState(false);
 	const isSignIn = type === "signin";
 
 	const form: UseFormReturn<T> = useForm({
@@ -71,9 +71,9 @@ export default function AuthForm<T extends FieldValues>({
 				},
 				duration: 5000,
 			});
-		}
 
-		setIsPending((prev) => !prev);
+			setIsPending((prev) => !prev);
+		}
 	};
 
 	return (

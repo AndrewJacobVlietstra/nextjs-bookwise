@@ -1,4 +1,3 @@
-import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 
 type AuthButtonProps = {
@@ -7,10 +6,16 @@ type AuthButtonProps = {
 };
 
 export default function AuthButton({ authType, isPending }: AuthButtonProps) {
+	const isSignin = authType === "signin";
+	const isSignup = authType === "signup";
+
 	return (
 		<Button className="form-btn" type="submit" disabled={isPending}>
-			{isPending ? "Loading..." : authType === "signin" && "Sign In"}
-			{isPending ? "Loading..." : authType === "signup" && "Create Account"}
+			{isSignin && isPending ? "Signing In..." : isSignin && "Sign In"}
+
+			{isSignup && isPending
+				? "Creating Your Account..."
+				: isSignup && "Create Account"}
 		</Button>
 	);
 }
