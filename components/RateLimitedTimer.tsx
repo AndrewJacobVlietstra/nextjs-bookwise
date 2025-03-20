@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useTimer } from "react-timer-hook";
 import { redirect } from "next/navigation";
 
