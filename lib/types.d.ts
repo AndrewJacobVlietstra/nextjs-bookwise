@@ -21,3 +21,5 @@ type AuthCredentials = {
 	universityId: number;
 	universityCard: string;
 };
+
+type AuthFormTypes = "signin" | "signup";

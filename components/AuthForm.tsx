@@ -27,7 +27,7 @@ import AuthButton from "./AuthButton";
 
 type AuthFormProps<T extends FieldValues> = {
 	defaultValues: T;
-	type: "signin" | "signup";
+	type: AuthFormTypes;
 	schema: ZodType<T>;
 	onSubmit: (data: T) => Promise<{ success: boolean; message?: string }>;
 };

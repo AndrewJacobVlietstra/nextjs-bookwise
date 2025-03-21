@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 
 type AuthButtonProps = {
-	authType: "signin" | "signup";
+	authType: AuthFormTypes;
 	isPending: boolean;
 };
 
