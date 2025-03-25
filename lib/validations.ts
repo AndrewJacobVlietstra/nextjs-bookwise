@@ -28,3 +28,11 @@ export const bookSchema = z.object({
 	summary: z.string().min(1).max(2000),
 	isLoanedBook: z.boolean().optional(),
 });
+
+export const userSchema = z.object({
+	fullName: z.string().min(3),
+	email: z.string().email(),
+	password: z.string().min(6),
+	universityId: z.coerce.number(),
+	universityCard: z.string().nonempty(),
+});
