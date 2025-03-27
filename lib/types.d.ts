@@ -23,3 +23,11 @@ type AuthCredentials = {
 };
 
 type AuthFormTypes = "signin" | "signup";
+
+type LibraryUser = {
+	fullName: string;
+	email: string;
+	password: string;
+	universityId: number;
+	universityCard: string;
+};
