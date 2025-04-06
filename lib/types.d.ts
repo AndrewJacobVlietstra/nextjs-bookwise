@@ -1,3 +1,15 @@
+type AuthFormTypes = "signin" | "signup";
+
+type AuthCredentials = {
+	fullName: string;
+	email: string;
+	password: string;
+	universityId: number;
+	universityCard: string;
+};
+
+type ActionError = { message: string } | undefined;
+
 type Book = {
 	id: number;
 	title: string;
@@ -13,16 +25,6 @@ type Book = {
 	summary: string;
 	isLoanedBook?: boolean;
 };
-
-type AuthCredentials = {
-	fullName: string;
-	email: string;
-	password: string;
-	universityId: number;
-	universityCard: string;
-};
-
-type AuthFormTypes = "signin" | "signup";
 
 type LibraryUser = {
 	fullName: string;

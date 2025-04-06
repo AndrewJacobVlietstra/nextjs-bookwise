@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -20,4 +21,12 @@ export const getInitials = (name: string) => {
 
 export const sleep = async (delay = 1000) => {
 	await new Promise((resolve) => setTimeout(resolve, delay));
+};
+
+export const handleActionError = (error: ActionError) => {
+	// If error exists toast error message, else do nothing
+	if (error) {
+		toast.warning(error.message);
+		return;
+	}
 };
