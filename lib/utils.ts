@@ -23,10 +23,12 @@ export const sleep = async (delay = 1000) => {
 	await new Promise((resolve) => setTimeout(resolve, delay));
 };
 
-export const handleActionError = (error: ActionError) => {
-	// If error exists toast error message, else do nothing
-	if (error) {
-		toast.warning(error.message);
-		return;
+export const handleActionError = (error?: ActionError) => {
+	// Exit function if an error object does not exist
+	if (!error) return;
+
+	// If error exists then toast error message
+	if (error.success === false) {
+		toast.error(error.message);
 	}
 };

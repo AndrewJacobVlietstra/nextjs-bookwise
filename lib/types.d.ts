@@ -8,7 +8,7 @@ type AuthCredentials = {
 	universityCard: string;
 };
 
-type ActionError = { message: string } | undefined;
+type ActionError = { success: boolean; message: string } | undefined;
 
 type Book = {
 	id: number;
