@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 import "@/styles/admin.css";
+import Sidebar from "@/components/admin/Sidebar";
 
 type AdminLayoutProps = {
 	children: ReactNode;
@@ -15,7 +16,7 @@ const AdminLayout = async ({ children }: AdminLayoutProps) => {
 
 	return (
 		<main className="flex flex-row min-h-screen w-full">
-			<p>Sidebar</p>
+			<Sidebar />
 
 			<div className="admin-container">
 				<p>Header</p>
