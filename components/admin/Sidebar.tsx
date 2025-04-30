@@ -61,7 +61,7 @@ export default function Sidebar({ session }: SidebarProps) {
 
 			<div className="user">
 				<Avatar>
-					<AvatarFallback className="bg-amber-100/90 hover:bg-amber-100 transition-all">
+					<AvatarFallback className="bg-amber-100">
 						{getInitials(session.user?.name || "?")}
 					</AvatarFallback>
 				</Avatar>
