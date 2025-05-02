@@ -19,7 +19,12 @@ export default function Sidebar({ session }: SidebarProps) {
 		<div className="admin-sidebar">
 			<div>
 				<div className="logo">
-					<Image src="icons/admin/logo.svg" alt="logo" height={37} width={37} />
+					<Image
+						src="/icons/admin/logo.svg"
+						alt="logo"
+						height={37}
+						width={37}
+					/>
 
 					<h1>BookWise</h1>
 				</div>
