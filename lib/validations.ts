@@ -14,19 +14,20 @@ export const signInSchema = z.object({
 });
 
 export const bookSchema = z.object({
-	id: z.coerce.number(),
-	title: z.string().min(1).max(200),
-	author: z.string().min(1).max(200),
-	genre: z.string().min(1).max(80),
-	rating: z.coerce.number(),
-	totalCopies: z.coerce.number(),
+	title: z.string().trim().min(2).max(100),
+	description: z.string().trim().min(10).max(1500),
+	author: z.string().trim().min(2).max(100),
+	genre: z.string().trim().min(2).max(50),
+	rating: z.number().min(1).max(5),
+	totalCopies: z.coerce.number().int().positive().lte(10000),
 	availableCopies: z.coerce.number(),
-	description: z.string().min(1).max(2000),
-	coverColor: z.string().min(1).max(500),
-	coverUrl: z.string().min(1).max(500).url(),
-	videoUrl: z.string().min(1).max(500).url(),
-	summary: z.string().min(1).max(2000),
-	isLoanedBook: z.boolean().optional(),
+	coverUrl: z.string().nonempty(),
+	coverColor: z
+		.string()
+		.trim()
+		.regex(/^#[0-9A-F]{6}$/i),
+	videoUrl: z.string().nonempty(),
+	summary: z.string().trim().min(10),
 });
 
 export const userSchema = z.object({
