@@ -20,7 +20,6 @@ export const bookSchema = z.object({
 	genre: z.string().trim().min(2).max(50),
 	rating: z.number().min(1).max(5),
 	totalCopies: z.coerce.number().int().positive().lte(10000),
-	availableCopies: z.coerce.number(),
 	coverUrl: z.string().nonempty(),
 	coverColor: z
 		.string()
