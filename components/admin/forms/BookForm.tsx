@@ -61,6 +61,69 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					name={"author"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Author
+							</FormLabel>
+							<FormControl>
+								<Input
+									required
+									placeholder="Book author"
+									className="book-form_input"
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"genre"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Genre
+							</FormLabel>
+							<FormControl>
+								<Input
+									required
+									placeholder="Book genre"
+									className="book-form_input"
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"rating"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Rating
+							</FormLabel>
+							<FormControl>
+								<Input
+									required
+									type="number"
+									min={1}
+									max={5}
+									placeholder="Book rating"
+									className="book-form_input"
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 			</form>
 		</Form>
 	);
