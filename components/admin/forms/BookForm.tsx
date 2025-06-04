@@ -9,7 +9,9 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
@@ -126,6 +128,112 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					name={"totalCopies"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Total Copies
+							</FormLabel>
+							<FormControl>
+								<Input
+									required
+									type="number"
+									min={1}
+									max={10000}
+									placeholder="Total Copies"
+									className="book-form_input"
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"description"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Description
+							</FormLabel>
+							<FormControl>
+								<Textarea
+									className="book-form_input"
+									placeholder="Book Description..."
+									rows={5}
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"summary"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Summary
+							</FormLabel>
+							<FormControl>
+								<Textarea
+									className="book-form_input"
+									placeholder="Book Summary..."
+									rows={5}
+									{...field}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"coverUrl"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Cover URL
+							</FormLabel>
+							<FormControl>{/* File Upload Component */}</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"coverColor"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Cover Color
+							</FormLabel>
+							<FormControl>{/* Color Picker Component */}</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+				<FormField
+					control={form.control}
+					name={"videoUrl"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Book Trailer
+							</FormLabel>
+							<FormControl>{/* File Upload Component */}</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<Button type="submit" className="book-form_btn text-white">
+					Add Book to Library
+				</Button>
 			</form>
 		</Form>
 	);
