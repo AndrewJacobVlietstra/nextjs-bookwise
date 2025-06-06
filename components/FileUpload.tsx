@@ -6,7 +6,12 @@ import { toast } from "sonner";
 import { IKImage, ImageKitProvider, IKUpload } from "imagekitio-next";
 import { useRef, useState } from "react";
 
-type ImageUploadProps = {
+type FileUploadProps = {
+	type: "image" | "video";
+	accept: string;
+	placeholder: string;
+	folder: string;
+	variant: "light" | "dark";
 	onFileChange: (filePath: string) => void;
 };
 
@@ -36,9 +41,17 @@ const authenticator = async () => {
 	}
 };
 
-export default function ImageUpload({ onFileChange }: ImageUploadProps) {
+export default function FileUpload({
+	type,
+	accept,
+	placeholder,
+	folder,
+	variant,
+	onFileChange,
+}: FileUploadProps) {
 	const IKUploadRef = useRef<HTMLInputElement | null>(null);
 	const [file, setFile] = useState<{ filePath: string } | null>(null);
+	const [progress, setProgress] = useState(0);
 
 	const onError = (error: any) => {
 		console.log(error);

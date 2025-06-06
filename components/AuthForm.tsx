@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import { FIELD_NAMES, FIELD_TYPES } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import ImageUpload from "./ImageUpload";
+import FileUpload from "./FileUpload";
 import AuthButton from "./AuthButton";
 
 type AuthFormProps<T extends FieldValues> = {
@@ -105,7 +105,7 @@ export default function AuthForm<T extends FieldValues>({
 									</FormLabel>
 									<FormControl>
 										{field.name === "universityCard" ? (
-											<ImageUpload onFileChange={field.onChange} />
+											<FileUpload onFileChange={field.onChange} />
 										) : (
 											<Input
 												className="form-input"
