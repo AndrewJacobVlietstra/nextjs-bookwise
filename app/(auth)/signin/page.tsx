@@ -5,6 +5,7 @@ import { signInSchema } from "@/lib/validations";
 import { signInWithCredentials } from "@/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import { toastVariants } from "@/lib/constants";
 
 export default function SignInPage() {
 	const searchParams = useSearchParams();
@@ -12,11 +13,7 @@ export default function SignInPage() {
 
 	if (searchParamsObj.logout === "success") {
 		toast.success("User signed out successfully.", {
-			style: {
-				color: "#fff",
-				backgroundColor: "#333",
-				border: "1px solid #777",
-			},
+			style: toastVariants.default,
 			duration: 5000,
 		});
 	}

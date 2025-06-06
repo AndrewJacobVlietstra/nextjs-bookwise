@@ -245,3 +245,17 @@ export const borrowStatuses = [
 		textColor: "text-[#026AA2]",
 	},
 ];
+
+export const toastVariants = {
+	default: { color: "#fff", backgroundColor: "#333", border: "1px solid #777" },
+	destructive: {
+		color: "#fff",
+		backgroundColor: "#ba2d2d",
+		border: "1px solid #d1d1d1",
+	},
+	warning: {
+		color: "#fff",
+		backgroundColor: "#c27500",
+		border: "1px solid #d1d1d1",
+	},
+};

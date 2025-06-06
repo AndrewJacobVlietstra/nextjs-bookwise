@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZodType } from "zod";
 import { toast } from "sonner";
-import { FIELD_NAMES, FIELD_TYPES } from "@/lib/constants";
+import { FIELD_NAMES, FIELD_TYPES, toastVariants } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import FileUpload from "./FileUpload";
@@ -53,22 +53,14 @@ export default function AuthForm<T extends FieldValues>({
 
 		if (result.success) {
 			toast.success(result.message, {
-				style: {
-					color: "#fff",
-					backgroundColor: "#333",
-					border: "1px solid #777",
-				},
+				style: toastVariants.default,
 				duration: 5000,
 			});
 
 			router.push("/");
 		} else if (!result.success) {
 			toast.error(result.message, {
-				style: {
-					color: "#fff",
-					backgroundColor: "#E23D28",
-					border: "1px solid #FF7F50",
-				},
+				style: toastVariants.destructive,
 				duration: 5000,
 			});
 

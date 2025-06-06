@@ -3,15 +3,17 @@
 import config from "@/lib/config";
 import Image from "next/image";
 import { toast } from "sonner";
+import { toastVariants } from "@/lib/constants";
 import { IKImage, ImageKitProvider, IKUpload } from "imagekitio-next";
 import { useRef, useState } from "react";
+import { capitalizeString } from "@/lib/utils";
 
 type FileUploadProps = {
 	type: "image" | "video";
 	accept: string;
 	placeholder: string;
 	folder: string;
-	variant: "light" | "dark";
+	variant?: "light" | "dark";
 	onFileChange: (filePath: string) => void;
 };
 
@@ -46,23 +48,29 @@ export default function FileUpload({
 	accept,
 	placeholder,
 	folder,
-	variant,
+	variant = "light",
 	onFileChange,
 }: FileUploadProps) {
 	const IKUploadRef = useRef<HTMLInputElement | null>(null);
 	const [file, setFile] = useState<{ filePath: string } | null>(null);
 	const [progress, setProgress] = useState(0);
 
+	const isDarkVariant = variant === "dark";
+
+	const styles = {
+		button: isDarkVariant
+			? "bg-dark-300"
+			: "bg-light-600 border-gray-100 border",
+		placeholder: isDarkVariant ? "text-light-100" : "text-slate-500",
+		text: isDarkVariant ? "text-light-100" : "text-dark-400",
+	};
+
 	const onError = (error: any) => {
 		console.log(error);
 
-		toast("Image Upload Failed", {
-			description: "Your image could not be uploaded. Please try again.",
-			style: {
-				color: "#fff",
-				backgroundColor: "#ff1a1a",
-				border: "none",
-			},
+		toast.error(`${capitalizeString(type)} Upload Failed`, {
+			description: `Your ${type} could not be uploaded. Please try again.`,
+			style: toastVariants.destructive,
 			duration: 6000,
 		});
 	};
@@ -72,11 +80,33 @@ export default function FileUpload({
 		setFile(res);
 		onFileChange(res.filePath);
 
-		toast("Image Uploaded Successfully", {
+		toast.success(`${capitalizeString(type)} Uploaded Successfully`, {
 			description: `${res.filePath} uploaded successfully!`,
-			style: { color: "#fff", backgroundColor: "#333", border: "none" },
+			style: toastVariants.default,
 			duration: 5000,
 		});
+	};
+
+	const onValidate = (file: File) => {
+		if (type === "image" && file.size > 20 * 1024 * 1024) {
+			toast.warning(`File size exceeds 20MB.`, {
+				description: `Please try uploading a smaller file.`,
+				style: toastVariants.warning,
+				duration: 5000,
+			});
+
+			return false;
+		}
+
+		if (type === "video" && file.size > 50 * 1024 * 1024) {
+			toast.warning(`File size exceeds 50MB.`, {
+				description: `Please try uploading a smaller file.`,
+				style: toastVariants.warning,
+				duration: 5000,
+			});
+
+			return false;
+		}
 	};
 
 	return (
