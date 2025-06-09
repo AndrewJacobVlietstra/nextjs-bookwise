@@ -97,7 +97,14 @@ export default function AuthForm<T extends FieldValues>({
 									</FormLabel>
 									<FormControl>
 										{field.name === "universityCard" ? (
-											<FileUpload onFileChange={field.onChange} />
+											<FileUpload
+												accept="image/*"
+												type="image"
+												folder="ids"
+												variant="dark"
+												placeholder="Upload Your ID"
+												onFileChange={field.onChange}
+											/>
 										) : (
 											<Input
 												className="form-input"

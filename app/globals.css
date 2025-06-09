@@ -123,7 +123,7 @@
 
 	/* File Upload */
 	.upload-btn {
-		@apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md bg-dark-300 hover:bg-dark-600/80 transition-all;
+		@apply flex min-h-14 w-full items-center justify-center gap-1.5 rounded-md bg-dark-300 transition-all;
 	}
 
 	.upload-filename {

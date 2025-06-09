@@ -14,6 +14,7 @@ type FileUploadProps = {
 	placeholder: string;
 	folder: string;
 	variant?: "light" | "dark";
+	value?: string;
 	onFileChange: (filePath: string) => void;
 };
 
@@ -49,19 +50,22 @@ export default function FileUpload({
 	placeholder,
 	folder,
 	variant = "light",
+	value,
 	onFileChange,
 }: FileUploadProps) {
 	const IKUploadRef = useRef<HTMLInputElement | null>(null);
-	const [file, setFile] = useState<{ filePath: string } | null>(null);
+	const [file, setFile] = useState<{ filePath: string | null }>({
+		filePath: value ?? null,
+	});
 	const [progress, setProgress] = useState(0);
 
 	const isDarkVariant = variant === "dark";
 
 	const styles = {
 		button: isDarkVariant
-			? "bg-dark-300"
-			: "bg-light-600 border-gray-100 border",
-		placeholder: isDarkVariant ? "text-light-100" : "text-slate-500",
+			? "bg-dark-300 hover:bg-dark-600/80"
+			: "bg-light-600/90 hover:bg-light-600 border-gray-100 border",
+		placeholder: isDarkVariant ? "text-light-100" : "text-slate-600",
 		text: isDarkVariant ? "text-light-100" : "text-dark-400",
 	};
 
@@ -151,11 +155,12 @@ export default function FileUpload({
 					height={20}
 				/>
 				<p className={cn("text-base", styles.placeholder)}>{placeholder}</p>
+
 				{file && (
 					<p className={cn("upload-filename", styles.text)}>{file.filePath}</p>
 				)}
 
-				{progress > 0 && (
+				{progress > 0 && progress !== 100 && (
 					<div className="w-full rounded-full bg-green-200">
 						<div
 							className="progress transition-all"
@@ -167,7 +172,7 @@ export default function FileUpload({
 				)}
 			</button>
 
-			{file &&
+			{file.filePath &&
 				(type === "image" ? (
 					<IKImage
 						alt={file.filePath}

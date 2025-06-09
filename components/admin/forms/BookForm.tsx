@@ -16,6 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { bookSchema } from "@/lib/validations";
+import FileUpload from "@/components/FileUpload";
+import ColorPicker from "../ColorPicker";
 
 interface BookFormProps extends Partial<Book> {
 	type?: "create" | "update";
@@ -40,7 +42,9 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 		},
 	});
 
-	const onSubmit = async (values: z.infer<typeof bookSchema>) => {};
+	const onSubmit = async (values: z.infer<typeof bookSchema>) => {
+		console.log(values);
+	};
 
 	return (
 		<Form {...form}>
@@ -193,30 +197,45 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 				/>
 				<FormField
 					control={form.control}
-					name={"coverUrl"}
-					render={({ field }) => (
-						<FormItem className="flex flex-col gap-1">
-							<FormLabel className="text-base font-normal text-dark-500">
-								Cover URL
-							</FormLabel>
-							<FormControl>{/* File Upload Component */}</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
 					name={"coverColor"}
 					render={({ field }) => (
 						<FormItem className="flex flex-col gap-1">
 							<FormLabel className="text-base font-normal text-dark-500">
 								Cover Color
 							</FormLabel>
-							<FormControl>{/* Color Picker Component */}</FormControl>
+							<FormControl>
+								<ColorPicker
+									value={field.value}
+									onPickerChange={field.onChange}
+								/>
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
+				<FormField
+					control={form.control}
+					name={"coverUrl"}
+					render={({ field }) => (
+						<FormItem className="flex flex-col gap-1">
+							<FormLabel className="text-base font-normal text-dark-500">
+								Cover URL
+							</FormLabel>
+							<FormControl>
+								<FileUpload
+									type="image"
+									accept="image/*"
+									placeholder="Upload a Book Cover"
+									folder="books/covers"
+									onFileChange={field.onChange}
+									value={field.value}
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
 				<FormField
 					control={form.control}
 					name={"videoUrl"}
@@ -225,7 +244,16 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 							<FormLabel className="text-base font-normal text-dark-500">
 								Book Trailer
 							</FormLabel>
-							<FormControl>{/* File Upload Component */}</FormControl>
+							<FormControl>
+								<FileUpload
+									type="video"
+									accept="video/*"
+									placeholder="Upload a Book Trailer"
+									folder="books/videos"
+									onFileChange={field.onChange}
+									value={field.value}
+								/>
+							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
