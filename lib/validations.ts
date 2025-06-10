@@ -24,7 +24,7 @@ export const bookSchema = z.object({
 	coverColor: z
 		.string()
 		.trim()
-		.regex(/^#[0-9A-F]{6}$/i),
+		.regex(/^#[0-9A-F]{6}$/i, "No Color Selected!"),
 	coverUrl: z.string().nonempty("Book Cover is required!"),
 	videoUrl: z.string().nonempty("Book Trailer is required!"),
 });

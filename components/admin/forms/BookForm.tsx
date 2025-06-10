@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import {
 	Form,
@@ -14,8 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
 import { bookSchema } from "@/lib/validations";
+import { createBook } from "@/lib/admin/actions/book";
+import { toast } from "sonner";
+import { toastVariants } from "@/lib/constants";
 import FileUpload from "@/components/FileUpload";
 import ColorPicker from "../ColorPicker";
 
@@ -43,7 +46,23 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 	});
 
 	const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-		console.log(values);
+		const { data, message, success } = await createBook(values);
+
+		if (success && data) {
+			toast.success(message, {
+				style: toastVariants.default,
+				duration: 5000,
+			});
+
+			router.push(`/admin/books/${data.id}`);
+		}
+
+		if (!success) {
+			toast.error(message, {
+				style: toastVariants.destructive,
+				duration: 5000,
+			});
+		}
 	};
 
 	return (
@@ -123,6 +142,7 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 									type="number"
 									min={1}
 									max={5}
+									step={0.1}
 									placeholder="Book rating"
 									className="book-form_input"
 									{...field}
@@ -166,7 +186,7 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 							<FormControl>
 								<Textarea
 									className="book-form_input"
-									placeholder="Book Description..."
+									placeholder="Book description..."
 									rows={5}
 									{...field}
 								/>
@@ -186,7 +206,7 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 							<FormControl>
 								<Textarea
 									className="book-form_input"
-									placeholder="Book Summary..."
+									placeholder="Book summary..."
 									rows={5}
 									{...field}
 								/>
@@ -235,7 +255,6 @@ export default function BookForm({ type, ...book }: BookFormProps) {
 						</FormItem>
 					)}
 				/>
-
 				<FormField
 					control={form.control}
 					name={"videoUrl"}

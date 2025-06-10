@@ -26,6 +26,19 @@ type Book = {
 	isLoanedBook?: boolean;
 };
 
+type BookData = {
+	title: string;
+	author: string;
+	genre: string;
+	rating: number;
+	totalCopies: number;
+	description: string;
+	summary: string;
+	coverColor: string;
+	coverUrl: string;
+	videoUrl: string;
+};
+
 type LibraryUser = {
 	fullName: string;
 	email: string;
