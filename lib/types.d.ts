@@ -11,7 +11,7 @@ type AuthCredentials = {
 type ActionError = { success: boolean; message: string } | undefined;
 
 type Book = {
-	id: number;
+	id: string;
 	title: string;
 	author: string;
 	genre: string;
@@ -23,7 +23,7 @@ type Book = {
 	coverUrl: string;
 	videoUrl: string;
 	summary: string;
-	isLoanedBook?: boolean;
+	createdAt?: Date | null;
 };
 
 type BookData = {

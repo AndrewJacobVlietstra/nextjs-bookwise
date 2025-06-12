@@ -4,9 +4,13 @@ import { Button } from "./ui/button";
 
 type BookOverviewProps = {
 	currentBook: Book;
+	userId: string;
 };
 
-export default function BookOverview({ currentBook }: BookOverviewProps) {
+export default function BookOverview({
+	currentBook,
+	userId,
+}: BookOverviewProps) {
 	const {
 		title,
 		author,

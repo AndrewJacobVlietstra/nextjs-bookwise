@@ -8,6 +8,8 @@ type BookListProps = {
 };
 
 export default function BookList({ className, books, title }: BookListProps) {
+	if (books.length === 0) return;
+
 	return (
 		<section className={cn("", className)}>
 			<h2 className="font-bebas-neue text-4xl text-light-100">{title}</h2>

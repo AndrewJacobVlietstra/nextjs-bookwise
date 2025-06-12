@@ -1,6 +1,6 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import BookCoverSvg from "./BookCoverSvg";
-import { cn } from "@/lib/utils";
 
 type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide";
 
@@ -41,6 +41,7 @@ export default function BookCover({
 				<Image
 					alt="Book Cover"
 					className="rounded-sm object-fill"
+					loading="lazy"
 					src={coverUrl}
 					fill
 				/>

@@ -259,3 +259,5 @@ export const toastVariants = {
 		border: "1px solid #d1d1d1",
 	},
 };
+
+export const imageKitUrlEndpoint = "https://ik.imagekit.io/ajvtechnologies";
