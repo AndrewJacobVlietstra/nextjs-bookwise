@@ -39,7 +39,7 @@ export default function Header({ session }: HeaderProps) {
 				</li>
 
 				<li>
-					<Link href="my-profile">
+					<Link href="/my-profile">
 						<Avatar>
 							<AvatarFallback className="bg-amber-100/90 hover:bg-amber-100 transition-all">
 								{getInitials(session.user?.name || "?")}
