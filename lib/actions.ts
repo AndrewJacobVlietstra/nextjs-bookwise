@@ -1,6 +1,6 @@
 "use server";
 
-import { users } from "@/database/schema";
+import { books, borrowRecords, users } from "@/database/schema";
 import { db } from "@/database/drizzle";
 import { eq } from "drizzle-orm";
 import { hash } from "bcryptjs";
@@ -9,6 +9,7 @@ import { sleep } from "./utils";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import ratelimit from "./ratelimit";
+import dayjs from "dayjs";
 
 export const signInWithCredentials = async (
 	credentials: Pick<AuthCredentials, "email" | "password">
@@ -88,3 +89,49 @@ export async function logout() {
 	await sleep();
 	await signOut({ redirect: true, redirectTo: "/signin?logout=success" });
 }
+
+export const borrowBook = async (params: BorrowBookParams) => {
+	const { bookId, userId } = params;
+
+	try {
+		const [bookToBorrow] = await db
+			.select({ availableCopies: books.availableCopies })
+			.from(books)
+			.where(eq(books.id, bookId))
+			.limit(1);
+
+		if (!bookToBorrow || bookToBorrow.availableCopies <= 0) {
+			return {
+				success: false,
+				message: "Book is not available for borrowing.",
+			};
+		}
+
+		// Compute dueDate based on current day + 7 days
+		const dueDate = dayjs().add(7, "day").toDate().toDateString();
+
+		// Insert borrowRecord into table
+		const [record] = await db
+			.insert(borrowRecords)
+			.values({ bookId, userId, dueDate })
+			.returning();
+
+		// Update the bookToBorrow's available copies
+		await db
+			.update(books)
+			.set({ availableCopies: bookToBorrow.availableCopies - 1 })
+			.where(eq(books.id, bookId));
+
+		return {
+			success: true,
+			data: record,
+		};
+	} catch (error) {
+		console.log(error);
+
+		return {
+			success: false,
+			message: "An error has occurred while trying to borrow book.",
+		};
+	}
+};

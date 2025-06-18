@@ -46,3 +46,8 @@ type LibraryUser = {
 	universityId: number;
 	universityCard: string;
 };
+
+type BorrowBookParams = {
+	bookId: string;
+	userId: string;
+};
