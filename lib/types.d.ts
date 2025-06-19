@@ -23,7 +23,18 @@ type Book = {
 	coverUrl: string;
 	videoUrl: string;
 	summary: string;
+	isLoaned?: boolean;
 	createdAt?: Date | null;
+	borrowRecord?: {
+		id: string;
+		userId: string;
+		bookId: string;
+		borrowDate: Date;
+		dueDate: string;
+		returnDate: string | null;
+		status: "BORROWED" | "RETURNED";
+		createdAt: Date | null;
+	};
 };
 
 type BookData = {
@@ -50,4 +61,9 @@ type LibraryUser = {
 type BorrowBookParams = {
 	bookId: string;
 	userId: string;
+};
+
+type ReturnBookParams = {
+	bookId: string;
+	recordId: string;
 };

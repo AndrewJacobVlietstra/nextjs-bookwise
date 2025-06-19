@@ -12,7 +12,7 @@ export default async function Home() {
 	const latestBooks = await db
 		.select()
 		.from(books)
-		.limit(10)
+		.limit(8)
 		.orderBy(desc(books.createdAt))
 		.then((books) =>
 			books.map((book) => ({
@@ -29,11 +29,7 @@ export default async function Home() {
 				userId={session?.user?.id as string}
 			/>
 
-			<BookList
-				books={latestBooks.slice(1)}
-				className="mt-28"
-				title="Latest Books"
-			/>
+			<BookList books={latestBooks} className="mt-28" title="Latest Books" />
 		</>
 	);
 }

@@ -94,12 +94,29 @@ export const borrowBook = async (params: BorrowBookParams) => {
 	const { bookId, userId } = params;
 
 	try {
+		// Get bookToBorrow and current user from db
 		const [bookToBorrow] = await db
-			.select({ availableCopies: books.availableCopies })
+			.select()
 			.from(books)
 			.where(eq(books.id, bookId))
 			.limit(1);
 
+		const [user] = await db
+			.select()
+			.from(users)
+			.where(eq(users.id, userId))
+			.limit(1);
+
+		// Check if user is eligible to borrow book
+		if (!user || user.status !== "APPROVED") {
+			return {
+				success: false,
+				message:
+					"User is not eligible to borrow book. Please contact an admin for approval.",
+			};
+		}
+
+		// Check if book is available for borrowing
 		if (!bookToBorrow || bookToBorrow.availableCopies <= 0) {
 			return {
 				success: false,
@@ -123,8 +140,11 @@ export const borrowBook = async (params: BorrowBookParams) => {
 			.where(eq(books.id, bookId));
 
 		return {
-			success: true,
 			data: record,
+			success: true,
+			message: `${user.fullName.split(" ")[0]} borrowed ${
+				bookToBorrow.title
+			} successfully.`,
 		};
 	} catch (error) {
 		console.log(error);
@@ -132,6 +152,45 @@ export const borrowBook = async (params: BorrowBookParams) => {
 		return {
 			success: false,
 			message: "An error has occurred while trying to borrow book.",
+		};
+	}
+};
+
+export const returnBook = async (params: ReturnBookParams) => {
+	try {
+		// Get current date
+		const returnDate = dayjs().format("YYYY-MM-DD");
+		const { bookId, recordId } = params;
+
+		// Update book record, return_date and status to RETURNED
+		await db
+			.update(borrowRecords)
+			.set({ returnDate, status: "RETURNED" })
+			.where(eq(borrowRecords.id, recordId));
+
+		// Get bookToReturn
+		const [bookToReturn] = await db
+			.select()
+			.from(books)
+			.where(eq(books.id, bookId))
+			.limit(1);
+
+		// Update the returned book's available copies
+		await db
+			.update(books)
+			.set({ availableCopies: bookToReturn.availableCopies + 1 })
+			.where(eq(books.id, bookId));
+
+		return {
+			success: true,
+			message: `Successfully returned ${bookToReturn.title}!`,
+		};
+	} catch (error) {
+		console.log(error);
+
+		return {
+			success: false,
+			message: "An error has occurred while trying to return book.",
 		};
 	}
 };

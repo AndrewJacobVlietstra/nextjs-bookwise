@@ -1,6 +1,6 @@
 import Image from "next/image";
 import BookCover from "./BookCover";
-import { Button } from "./ui/button";
+import BorrowButton from "./BorrowButton";
 
 type BookOverviewProps = {
 	currentBook: Book;
@@ -12,8 +12,9 @@ export default function BookOverview({
 	userId,
 }: BookOverviewProps) {
 	const {
-		title,
+		id: bookId,
 		author,
+		title,
 		genre,
 		rating,
 		totalCopies,
@@ -21,8 +22,6 @@ export default function BookOverview({
 		description,
 		coverColor,
 		coverUrl,
-		videoUrl,
-		summary,
 	} = currentBook;
 
 	return (
@@ -58,10 +57,7 @@ export default function BookOverview({
 
 				<p className="book-description">{description}</p>
 
-				<Button className="book-overview_btn">
-					<Image src="/icons/book.svg" alt="book" width={20} height={20} />
-					<p className="font-bebas-neue text-xl text-dark-100">Borrow</p>
-				</Button>
+				<BorrowButton bookId={bookId} userId={userId} />
 			</div>
 
 			<div className="relative flex flex-1 justify-center">

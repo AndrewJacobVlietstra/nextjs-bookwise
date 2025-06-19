@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 import { cn, getInitials } from "@/lib/utils";
+import SignOutButton from "./SignOutButton";
 
 type HeaderProps = {
 	session: Session;
@@ -14,8 +15,10 @@ type HeaderProps = {
 export default function Header({ session }: HeaderProps) {
 	const pathname = usePathname();
 
+	const isMyProfilePath = pathname === "/my-profile";
+
 	return (
-		<header className="flex justify-between gap-5 my-10">
+		<header className="flex justify-between gap-x-16 my-10">
 			<Link href="/">
 				<Image
 					src="/icons/logo.svg"
@@ -29,24 +32,31 @@ export default function Header({ session }: HeaderProps) {
 				<li>
 					<Link
 						href="/library"
-						className={cn(
-							"text-base cursor-pointer capitalize",
-							pathname === "/library" ? "text-light-200" : "text-light-100"
-						)}
+						className={cn("text-light-100 text-base cursor-pointer capitalize")}
 					>
 						Library
 					</Link>
 				</li>
 
-				<li>
-					<Link href="/my-profile">
-						<Avatar>
-							<AvatarFallback className="bg-amber-100/90 hover:bg-amber-100 transition-all">
-								{getInitials(session.user?.name || "?")}
-							</AvatarFallback>
-						</Avatar>
-					</Link>
-				</li>
+				{!isMyProfilePath ? null : (
+					<li>
+						<form>
+							<SignOutButton />
+						</form>
+					</li>
+				)}
+
+				{isMyProfilePath ? null : (
+					<li>
+						<Link href="/my-profile">
+							<Avatar>
+								<AvatarFallback className="bg-amber-100/90 hover:bg-amber-100 transition-all">
+									{getInitials(session.user?.name || "?")}
+								</AvatarFallback>
+							</Avatar>
+						</Link>
+					</li>
+				)}
 			</ul>
 		</header>
 	);
