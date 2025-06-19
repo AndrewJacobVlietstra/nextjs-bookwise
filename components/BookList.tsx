@@ -3,12 +3,18 @@ import { cn } from "@/lib/utils";
 
 type BookListProps = {
 	books: Book[];
-	className?: string;
 	title: string;
+	className?: string;
+	isProfilePage?: boolean;
 };
 
-export default function BookList({ className, books, title }: BookListProps) {
-	if (books.length === 0)
+export default function BookList({
+	className,
+	books,
+	title,
+	isProfilePage = false,
+}: BookListProps) {
+	if (books.length === 0 && isProfilePage)
 		return (
 			<section className={cn("text-center", className)}>
 				<h2 className="font-bebas-neue text-4xl text-light-100">

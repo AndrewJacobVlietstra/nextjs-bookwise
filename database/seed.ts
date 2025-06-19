@@ -1,4 +1,4 @@
-import dummyBooks from "../dummybooks.json";
+import dummyBooks from "../dummyBooks.json";
 import ImageKit from "imagekit";
 import { books } from "./schema";
 import { neon } from "@neondatabase/serverless";

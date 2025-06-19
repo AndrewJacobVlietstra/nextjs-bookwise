@@ -39,7 +39,11 @@ export default async function MyProfilePage() {
 				, here are all your borrowed books, they can be returned at any time.
 			</p>
 
-			<BookList books={borrowedBooks} title="Borrowed Books" />
+			<BookList
+				books={borrowedBooks}
+				title="Borrowed Books"
+				isProfilePage={true}
+			/>
 		</>
 	);
 }
