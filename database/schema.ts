@@ -27,7 +27,7 @@ export const users = pgTable("users", {
 	fullName: varchar("full_name", { length: 255 }).notNull(),
 	email: text("email").notNull().unique(),
 	password: text("password").notNull(),
-	status: STATUS_ENUM("status").default("PENDING"),
+	status: STATUS_ENUM("status").default("APPROVED"),
 	role: ROLE_ENUM("role").default("USER"),
 	universityId: integer("university_id").notNull().unique(),
 	universityCard: text("university_card").notNull(),

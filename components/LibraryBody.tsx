@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import BookList from "./BookList";
 
 type LibraryBodyProps = {
@@ -10,6 +10,13 @@ type LibraryBodyProps = {
 export default function LibraryBody({ books }: LibraryBodyProps) {
 	const [search, setSearch] = useState("");
 	const [filteredBooks, setFilteredBooks] = useState(books || []);
+	const inputRef = useRef<HTMLInputElement | null>(null);
+
+	const handleClearSearch = () => {
+		setSearch("");
+		setFilteredBooks(books);
+		inputRef.current?.focus();
+	};
 
 	const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
@@ -37,12 +44,17 @@ export default function LibraryBody({ books }: LibraryBodyProps) {
 					className="text-light-100 form-input font-sans rounded-lg px-6"
 					placeholder="Search for a book..."
 					type="text"
+					ref={inputRef}
 					value={search}
 					onChange={(e) => handleSearchChange(e)}
 				/>
 			</div>
 
-			<BookList books={filteredBooks} title="Library" />
+			<BookList
+				books={filteredBooks}
+				clearSearch={handleClearSearch}
+				title="Library"
+			/>
 		</>
 	);
 }

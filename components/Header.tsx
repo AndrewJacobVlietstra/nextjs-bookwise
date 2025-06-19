@@ -31,6 +31,15 @@ export default function Header({ session }: HeaderProps) {
 			<ul className="flex flex-row items-center gap-8">
 				<li>
 					<Link
+						href="/"
+						className={cn("text-light-100 text-base cursor-pointer capitalize")}
+					>
+						Home
+					</Link>
+				</li>
+
+				<li>
+					<Link
 						href="/library"
 						className={cn("text-light-100 text-base cursor-pointer capitalize")}
 					>

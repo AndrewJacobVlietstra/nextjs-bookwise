@@ -29,7 +29,11 @@ export default async function Home() {
 				userId={session?.user?.id as string}
 			/>
 
-			<BookList books={latestBooks} className="mt-28" title="Latest Books" />
+			<BookList
+				books={latestBooks.slice(1)}
+				className="mt-28"
+				title="Latest Books"
+			/>
 		</>
 	);
 }

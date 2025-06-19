@@ -29,6 +29,13 @@
       "when": 1750184609809,
       "tag": "0003_yummy_stone_men",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1750301618346,
+      "tag": "0004_lush_stranger",
+      "breakpoints": true
     }
   ]
 }
