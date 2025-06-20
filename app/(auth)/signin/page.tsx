@@ -23,8 +23,8 @@ export default function SignInPage() {
 			type="signin"
 			schema={signInSchema}
 			defaultValues={{
-				email: "",
-				password: "",
+				email: "guest@gmail.com",
+				password: "guest123",
 			}}
 			onSubmit={signInWithCredentials}
 		/>
