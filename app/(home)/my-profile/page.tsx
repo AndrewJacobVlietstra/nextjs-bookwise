@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { books, borrowRecords } from "@/database/schema";
 import { imageKitUrlEndpoint } from "@/lib/constants";
 import BookList from "@/components/BookList";
+import SignOutButton from "@/components/SignOutButton";
 
 export default async function MyProfilePage() {
 	const session = await auth();
@@ -38,6 +39,10 @@ export default async function MyProfilePage() {
 				</span>
 				, here are all your borrowed books, they can be returned at any time.
 			</p>
+
+			<div className="w-fit mb-8">
+				<SignOutButton className="relative bottom-0 font-ibm-plex-sans font-semibold uppercase py-6 px-12 text-white bg-[#00d8ff]/60 hover:bg-[#00d8ff]/90 hover:text-dark-100 hover:bottom-[3px] active:bottom-0 transition-all" />
+			</div>
 
 			<BookList
 				books={borrowedBooks}
